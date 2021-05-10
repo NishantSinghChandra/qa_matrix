@@ -1,0 +1,51 @@
+{% extends 'menu.html' %}
+{% block status %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 75%;
+            font-family: "Lucida Console", "Courier New", monospace;
+            font-size: 1.2em;
+            }
+        thead{
+            background-color: #5DADE2;
+        }
+        tr:nth-child(even) {
+                              background-color: #85C1E9;
+                            }
+
+        .container {
+              padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+            }
+    </style>
+    <div class='container' style="">
+        <p>{{env}} status:</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Component</td>
+                <td>Status</td>
+            </tr>
+            </thead>
+        <tr>
+            {% block jenkin_vars%}
+            <td> {{jenkin_vars['env']}}  Regression</td>
+            <td><a href="{{jenkin_vars['link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+                <img src="{{jenkin_vars['img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+                </a>
+            </td>
+            {% endblock %}
+        </tr>
+        {% for key, value in result.items() %}
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock status%}
