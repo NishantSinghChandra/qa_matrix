@@ -29,8 +29,8 @@ def qaar():
 	status = {'state': 'amber', 'health': 'ok', 'pipeline': 'running'}
 	jenkin_vars = {
 		'env': env,
-		'link': 'http://jenkins.shn.io/job/tp-automation-batch-py3/',
-		'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'}
+		'link': 'http://jenkins.shn.io/job/tp-automation-batch/',
+		'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'}
 	return render_template("qat.html", env=env, result=status, jenkin_vars=jenkin_vars)
 
 
