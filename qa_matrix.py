@@ -11,6 +11,7 @@ def hello_world(user):
 def index():
 	return render_template("menu.html")
 
+
 @app.route('/qat')
 def qat():
 	env = 'QAT'
@@ -21,10 +22,11 @@ def qat():
 					'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'}
 	return render_template("qat.html", env=env, result=status, jenkin_vars=jenkin_vars)
 
+
 @app.route('/qaar')
 def qaar():
 	env = 'QAAR'
-	status = {'state':'amber', 'health' :'ok', 'pipeline': 'running'}
+	status = {'state': 'amber', 'health': 'ok', 'pipeline': 'running'}
 	jenkin_vars = {
 		'env': env,
 		'link': 'http://jenkins.shn.io/job/tp-automation-batch-py3/',
