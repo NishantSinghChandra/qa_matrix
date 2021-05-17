@@ -1,6 +1,7 @@
 qaar = 'QAAR'
 qat = 'QAT'
 govqa = 'GovQA'
+envs = ['QAAR', 'QAT', 'GovQA']
 
 
 class qa_constants:
@@ -23,15 +24,15 @@ class qa_constants:
             self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'
             self.gap_analysis = 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
 
-    # @staticmethod
-    def get_constants_json(self):
-        constants = {
+        self.constants = {
             'link': self.link,
             'img': self.img,
             'gap_analysis': self.gap_analysis,
             'env': self.env
         }
-        return constants
+
+
+myenv = qa_constants
 
 
 if __name__ == "__main__":

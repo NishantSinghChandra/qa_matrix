@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
+from resource.qa_constants import *
 app = Flask(__name__)
 
 
@@ -12,37 +13,15 @@ def index():
 	return render_template("menu.html")
 
 
-@app.route('/qat')
-def qat():
-	env = 'QAT'
+@app.route('/<env>')
+def status(env):
+	if env in envs:
+		constants = qa_constants(env).constants
+	else:
+		return redirect('/')
 	status = {'state': 'green', 'health': 'ok', 'pipeline': 'running'}
-	jenkin_vars = {
-					'env': env,
-					'link': 'http://jenkins.shn.io/job/tp-automation-batch-py3/',
-					'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'}
-	return render_template("qat.html", env=env, result=status, jenkin_vars=jenkin_vars)
 
-
-@app.route('/qaar')
-def qaar():
-	env = 'QAAR'
-	status = {'state': 'amber', 'health': 'ok', 'pipeline': 'running'}
-	jenkin_vars = {
-		'env': env,
-		'link': 'http://jenkins.shn.io/job/tp-automation-batch/',
-		'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'}
-	return render_template("qat.html", env=env, result=status, jenkin_vars=jenkin_vars)
-
-
-@app.route('/govqa')
-def govqa():
-	env='GovQA'
-	status = {'state': 'red', 'health': 'bad', 'pipeline': 'stopped'}
-	jenkin_vars = {
-		'env': env,
-		'link': 'http://jenkins.shn.io/job/tp-automation-batch-py3/',
-		'img': 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'}
-	return render_template("qat.html", env=env, result=status, jenkin_vars=jenkin_vars)
+	return render_template("status.html", result=status, constants=constants)
 
 
 if __name__ == "__main__":

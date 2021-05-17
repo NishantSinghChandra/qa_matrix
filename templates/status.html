@@ -23,7 +23,7 @@
             }
     </style>
     <div class='container' style="">
-        <p>{{env}} status:</p>
+        <p>{{constants['env']}} status:</p>
         <table class="table">
             <thead>
             <tr>
@@ -33,9 +33,9 @@
             </thead>
         <tr>
             {% block constants%}
-            <td> constants.env  Regression</td>
-            <td><a href="{{constants.link}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
-                <img src="{{constants.img}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+            <td> {{constants['env']}}  Regression</td>
+            <td><a href="{{constants['link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+                <img src="{{constants['img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
             {% endblock %}
@@ -47,5 +47,8 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
+    <div>
+        <a class='container' href="{{constants['gap_analysis']}}"> Go to {{constants['env']}} gap analysis page</a>
     </div>
 {% endblock status%}
