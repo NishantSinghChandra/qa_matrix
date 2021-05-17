@@ -3,11 +3,6 @@ from resource.qa_constants import *
 app = Flask(__name__)
 
 
-@app.route('/hello/<user>')
-def hello_world(user):
-	return render_template('hello_world.html', name=user)
-
-
 @app.route('/')
 def index():
 	return render_template("menu.html")
