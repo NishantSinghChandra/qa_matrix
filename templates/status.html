@@ -32,10 +32,10 @@
             </tr>
             </thead>
         <tr>
-            {% block jenkin_vars%}
-            <td> {{jenkin_vars['env']}}  Regression</td>
-            <td><a href="{{jenkin_vars['link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
-                <img src="{{jenkin_vars['img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+            {% block constants%}
+            <td> constants.env  Regression</td>
+            <td><a href="{{constants.link}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+                <img src="{{constants.img}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
             {% endblock %}
