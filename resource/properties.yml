@@ -1,0 +1,17 @@
+Environment:
+  qat:
+    link : "http://jenkins.shn.io/job/tp-automation-batch-py3/"
+    img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch-py3'
+    gap_analysis: 'http://172.18.19.196:5253/tpEmrGapAnalysis.html'
+
+
+
+  qaar:
+    link: 'http://jenkins.shn.io/job/tp-automation-batch/'
+    img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch/'
+    gap_analysis : 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
+
+  govqa:
+    link : 'http://jenkins.shn.io/job/tp-automation-batch/'
+    img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch/'
+    gap_analysis : 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
