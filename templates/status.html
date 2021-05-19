@@ -1,16 +1,24 @@
 {% extends 'menu.html' %}
 {% block status %}
     <style>
-        table, th, td {
+        #gapanalysis {
+            font-family: arial;
+            font-size:0.75em;
+          }
+
+        #status, th, td {
             border: 1px solid black;
             border-collapse: collapse;
             width: 75%;
             font-family: "Lucida Console", "Courier New", monospace;
             font-size: 1.2em;
             }
+
         thead{
             background-color: #5DADE2;
-        }
+            font-weight: bold;
+            }
+
         tr:nth-child(even) {
                               background-color: #85C1E9;
                             }
@@ -24,7 +32,7 @@
     </style>
     <div class='container' style="">
         <p>{{constants['env']}} status:</p>
-        <table class="table">
+        <table class="table" id="status">
             <thead>
             <tr>
                 <td>Component</td>
@@ -48,7 +56,13 @@
         {% endfor %}
     </table>
     </div>
+
     <div>
-        <a class='container' href="{{constants['gap_analysis']}}"> Go to {{constants['env']}} gap analysis page</a>
+        <label>{{constants['env']}} recent rundate status: </label>
+        <table id="gapanalysis">
+        {{gap_analysis_table | safe}}</table>
+    </div>
+    <div>
+        <a href="{{constants['gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
     </div>
 {% endblock status%}
