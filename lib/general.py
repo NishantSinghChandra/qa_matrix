@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-
 def get_rows_from_gap_analysys(endpoint):
     resp = _request(endpoint)
     if resp.status_code == 200:
