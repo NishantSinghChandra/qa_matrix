@@ -12,7 +12,7 @@ class qa_constants:
         self.deployedenv = 'development'
         self.socksproxy_port = 9997
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
-            self.env_properties = yaml.load(stream, Loader=yaml.FullLoader)
+            self.env_properties = yaml.load(stream)#Loader=yaml.FullLoader
 
         if env == qat:
             self.link = 'http://jenkins.shn.io/job/tp-automation-batch-py3/'
