@@ -8,7 +8,7 @@ def get_rows_from_gap_analysys(endpoint):
             page = BS(resp.text, "lxml")
             allRows = page.findAll("table")[1].findAll("tr")
             releventRows = [allRows[0]]
-            for row in allRows[-13:-1]:
+            for row in allRows[-6:-1]:
                 releventRows.append(row)
             return ''.join([row.prettify() for row in releventRows])
         else:
