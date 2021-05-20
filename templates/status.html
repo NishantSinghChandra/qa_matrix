@@ -24,10 +24,10 @@
                             }
 
         .container {
-              padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
+              padding-top: 10px;
+              padding-right: 10px;
+              padding-bottom: 10px;
+              padding-left: 10px;
             }
     </style>
     <div class='container' style="">
@@ -57,12 +57,21 @@
     </table>
     </div>
 
-    <div>
-        <label>{{constants['env']}} recent rundate status: </label>
-        <table id="gapanalysis">
-        {{gap_analysis_table | safe}}</table>
+    <div class='container'>
+        <label>{{constants['env']}} TP pipeline recent rundate status: </label>
+        <table id="gapanalysis" border="1">
+        {{tp_analysis_table | safe}}</table>
+    </div>
+    <div class='container'>
+        <a href="{{constants['tp_gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
+    </div>
+    <div class='container'>
+        <label>{{constants['env']}} DP pipeline recent rundate status: </label>
+        <table id="gapanalysis" border="1">
+        {{dp_analysis_table | safe}}</table>
     </div>
     <div>
-        <a href="{{constants['gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
+        <a href="{{constants['dp_gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
     </div>
+
 {% endblock status%}

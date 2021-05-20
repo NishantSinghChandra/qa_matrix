@@ -2,6 +2,7 @@ import yaml
 import os
 qaar = 'QAAR'
 qat = 'QAT'
+qas = 'QAS'
 govqa = 'GovQA'
 envs = ['QAAR', 'QAT', 'GovQA', 'QAS']
 cur_path = os.path.dirname(os.path.realpath(__file__))
@@ -16,22 +17,32 @@ class qa_constants:
         if env == qat:
             self.link = 'http://jenkins.shn.io/job/tp-automation-batch-py3/'
             self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'
-            self.gap_analysis = 'http://172.18.19.196:5253/tpEmrGapAnalysis.html'
+            self.tp_gap_analysis = 'http://172.18.19.196:5253/tpEmrGapAnalysis.html'
+            self.dp_gap_analysis = 'http://172.18.19.196:5253/dpEmrGapAnalysis.html'
 
         elif env == qaar:
             self.link = 'http://jenkins.shn.io/job/tp-automation-batch/'
             self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'
-            self.gap_analysis = 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
+            self.tp_gap_analysis = 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
+            self.dp_gap_analysis = 'http://172.18.67.93:5253/dpEmrGapAnalysis.html'
 
         elif env == govqa:
-            self.link = 'http://jenkins.shn.io/job/tp-automation-batch/'
-            self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'
-            self.gap_analysis = 'http://172.18.211.102:5253/tpEmrGapAnalysis.html'
+            self.link = ''
+            self.img = ''
+            self.tp_gap_analysis = 'http://172.18.211.102:5253/tpEmrGapAnalysis.html'
+            self.dp_gap_analysis = 'http://172.18.211.102:5253/dpEmrGapAnalysis.html'
+
+        elif env == qas:
+            self.link = ''
+            self.img = ''
+            self.tp_gap_analysis = 'http://172.18.115.124:5253/tpEmrGapAnalysis.html'
+            self.dp_gap_analysis = 'http://172.18.115.124:5253/dpEmrGapAnalysis.html'
 
         self.constants = {
                 'link': self.link,
                 'img': self.img,
-                'gap_analysis': self.gap_analysis,
+                'tp_gap_analysis': self.tp_gap_analysis,
+                'dp_gap_analysis': self.dp_gap_analysis,
                 'env': env
                 }
     def get_dataservice_url(self):
