@@ -16,7 +16,7 @@ def index():
 
 @app.route('/<env>')
 def status(env):
-	status = {'state': 'dummy', 'health': 'dummy', 'pipeline': 'dummy'}
+	status = dict()
 	if env in envs:
 		env_var = qa_constants(env)
 		constants = env_var.constants
