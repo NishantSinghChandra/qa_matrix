@@ -14,42 +14,21 @@ class qa_constants:
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
             self.env_properties = yaml.load(stream)#Loader=yaml.FullLoader
 
-        if env == qat:
-            self.link = 'http://jenkins.shn.io/job/tp-automation-batch-py3/'
-            self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3'
-            self.tp_gap_analysis = 'http://172.18.19.196:5253/tpEmrGapAnalysis.html'
-            self.dp_gap_analysis = 'http://172.18.19.196:5253/dpEmrGapAnalysis.html'
-            self.ekg = 'http://ekg-qat.shared.int.shn.io/v1/html'
-
-        elif env == qaar:
-            self.link = 'http://jenkins.shn.io/job/tp-automation-batch/'
-            self.img = 'http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch/'
-            self.tp_gap_analysis = 'http://172.18.67.93:5253/tpEmrGapAnalysis.html'
-            self.dp_gap_analysis = 'http://172.18.67.93:5253/dpEmrGapAnalysis.html'
-            self.ekg = 'http://ekg-qaautoregression.shared.int.shn.io/v1/html'
-
-        elif env == govqa:
-            self.link = ''
-            self.img = ''
-            self.tp_gap_analysis = 'http://172.18.211.102:5253/tpEmrGapAnalysis.html'
-            self.dp_gap_analysis = 'http://172.18.211.102:5253/dpEmrGapAnalysis.html'
-            self.ekg = 'http://ekg-govqa.shared.int.shn.io/v1/html'
-
-        elif env == qas:
-            self.link = ''
-            self.img = ''
-            self.tp_gap_analysis = 'http://172.18.115.124:5253/tpEmrGapAnalysis.html'
-            self.dp_gap_analysis = 'http://172.18.115.124:5253/dpEmrGapAnalysis.html'
-            self.ekg = 'http://ekg-awsqastable.shared.int.shn.io/v1/html'
-
-        self.artifacts = self.load_monitor_json()
+        self.regression_job_link = self.env_properties['Environment'][env]['regression_job_link']
+        self.regression_job_img = self.env_properties['Environment'][env]['regression_job_img']
+        self.ekg_page = self.env_properties['Environment'][env]['ekg_page']
+        self.artifacts = self._load_monitor_json()
+        ip = self.set_gapanalysis_links()
+        self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(ip)
+        self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(ip)
         self.constants = {
-                'link': self.link,
-                'img': self.img,
+                'regression_job_link': self.regression_job_link,
+                'regression_job_img': self.regression_job_img,
                 'tp_gap_analysis': self.tp_gap_analysis,
                 'dp_gap_analysis': self.dp_gap_analysis,
                 'env': env
                 }
+
     def get_dataservice_url(self):
         try:
             tp_data_service_ip = list(self.artifacts['hosts']['tp-dataservice'].keys())
@@ -64,17 +43,11 @@ class qa_constants:
             except requests.exceptions.ConnectionError:
                 continue
 
-    def load_monitor_json(self):
+    def _load_monitor_json(self):
         tmp = {"hosts": {}}
-        # from BeautifulSoup import BeautifulSoup as BS
-        # from urllib.request import urlopen
         try:
-            b = BS(requests.get(self.ekg).content, features="lxml")
+            b = BS(requests.get(self.ekg_page).content, features="lxml")
         except requests.exceptions.ConnectionError:
-            # logger.warn("ignorning the url:" + str(url))
-            return {}
-        except:
-            # logger.warn("ignorning the url:" + str(url))
             return {}
         env_info = {}
         for _ in b.findAll("tr")[1:]:
@@ -89,9 +62,15 @@ class qa_constants:
             else:
                 env_info[component][str(row[2].text)] = str(row[0].text)
         tmp["hosts"] = env_info
-        # self._load_census_json()
         return tmp
 
+    def set_gapanalysis_links(self):
+        if len(self.artifacts)==0:
+            return False
+        for key, value in self.artifacts['hosts'].iteritems():
+            if key.__contains__('gapanalysis'):
+                ip = value.keys()[0]
+                return ip
 
 global myenv
 myenv = qa_constants
@@ -99,4 +78,4 @@ myenv = qa_constants
 
 if __name__ == "__main__":
     qat = qa_constants('QAT')
-    print qat.link
+    print qat.set_gapanalysis_links()
