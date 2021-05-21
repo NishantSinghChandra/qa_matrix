@@ -7,10 +7,11 @@ def get_rows_from_gap_analysys(endpoint):
         if resp.status_code == 200:
             page = BS(resp.text, "lxml")
             allRows = page.findAll("table")[1].findAll("tr")
-            releventRows = [allRows[0]]
+            head = allRows[0].prettify().replace('tr', 'thead')
+            releventRows = []
             for row in allRows[-7:-1]:
                 releventRows.append(row)
-            return ''.join([row.prettify() for row in releventRows])
+            return head + ''.join([row.prettify() for row in releventRows])
         else:
             raise Exception
     except:
