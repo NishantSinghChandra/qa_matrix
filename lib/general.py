@@ -18,7 +18,7 @@ def get_rows_from_gap_analysys(endpoint):
         return '<p>Gap analysis page is not accessible</p>'
 
 
-def get_rows_from_eureka(endpoint):
+def get_rows_from_eureka(endpoint, service_list):
     # service_to_monitor_list = service_to_monitor_list
     try:
         resp = requests.get(endpoint)
@@ -31,7 +31,7 @@ def get_rows_from_eureka(endpoint):
             for row in allRows:
                 if len(row.findAll('td')) == 0:
                     continue
-                if row.findAll('td')[0].text in service_to_monitor_list:
+                if row.findAll('td')[0].text in service_list:
                     releventRows.append(row)
             return head + ''.join([row.prettify() for row in releventRows])
         else:
