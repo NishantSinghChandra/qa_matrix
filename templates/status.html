@@ -2,7 +2,7 @@
 {% block status %}
     <style>
         #gapanalysis {
-            font-family: arial;
+            font-family: Geneva;
             font-size:0.75em;
           }
 
@@ -10,8 +10,8 @@
             border: 1px solid black;
             border-collapse: collapse;
             width: 75%;
-            font-family: "Lucida Console", "Courier New", monospace;
-            font-size: 1.2em;
+            font-family: "Lucida Console", "Courier New", Geneva;
+            font-size: 1em;
             }
 
         thead{
@@ -42,8 +42,8 @@
         <tr>
             {% block constants%}
             <td> {{constants['env']}}  Regression</td>
-            <td><a href="{{constants['link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
-                <img src="{{constants['img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+            <td><a href="{{constants['regression_job_link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+                <img src="{{constants['regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
             {% endblock %}
@@ -51,7 +51,12 @@
         {% for key, value in result.items() %}
         <tr>
             <td>{{key}}</td>
-            <td>{{value}}</td>
+            {%- if value in ['OK', 'Up', 'Success']-%}
+                <td><font color="green">{{value}}</font></td>
+            {% else %}
+                <td bgcolor="red" font-weight="bold"><font color="black">{{value}}</font></td>
+            {%- endif -%}
+
         </tr>
         {% endfor %}
     </table>
