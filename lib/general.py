@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as BS
-from resource.qa_constants import *
+#from resource.qa_constants import *
 def get_rows_from_gap_analysys(endpoint):
     try:
         resp = requests.get(endpoint)
