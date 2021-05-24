@@ -5,6 +5,10 @@
             font-family: Geneva;
             font-size:0.75em;
           }
+        #eureka {
+            font-family: Geneva;
+            font-size:0.75em;
+          }
 
         #status, th, td {
             border: 1px solid black;
@@ -79,8 +83,7 @@
 
     <div class='container'>
         <label>{{constants['env']}} Eureka page status: </label>
-        <table id="eureka" border="1">
-        {{eureka_rows | safe}}</table>
+        <table id="eureka" border="1">{{eureka_rows | safe}}</table>
     </div>
     <div>
         <a href="{{constants['eureka_link']}}"> Go to {{constants['env']}} Eureka full page</a>
