@@ -7,9 +7,8 @@ qat = 'QAT'
 qas = 'QAS'
 govqa = 'GovQA'
 envs = ['QAAR', 'QAT', 'GovQA', 'QAS']
-service_to_monitor_list = ['KAFKA:FALCON','KAFKA:ULTRON', 'KAFKA_ZOOKEEPER:FALCON', 'SI-SERV:DEFAULT', 'MERLIN:DEFAULT'
-                           'KAFKA_ZOOKEEPER:ULTRON', 'NETACUITY-SERVER:PROXYAPI','TP-DATASERVICE:FALCON-INT',
-                           'WATCHTOWER-SERVER:DEFAULT', 'DASHBOARD:QAT']
+service_to_monitor_list = ['KAFKA', 'SI-SERV', 'MERLIN', 'NETACUITY-SERVER', 'TP-DATASERVICE', 'WATCHTOWER-SERVER',
+                           'DASHBOARD']
 cur_path = os.path.dirname(os.path.realpath(__file__))
 
 class qa_constants:
