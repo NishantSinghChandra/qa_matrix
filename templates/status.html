@@ -44,7 +44,7 @@
         <tr>
             {% block constants%}
             <td> {{constants['env']}}  Regression</td>
-            <td><a href="{{constants['regression_job_link']}}"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+            <td><a href="{{constants['regression_job_link']}}" target="_blank"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
                 <img src="{{constants['regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
@@ -70,7 +70,7 @@
         {{tp_analysis_table | safe}}</table>
     </div>
     <div class='container'>
-        <a href="{{constants['tp_gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
+        <a href="{{constants['tp_gap_analysis']}}" target="_blank"> Go to {{constants['env']}} gap analysis full page</a>
     </div>
     <div class='container'>
         <label>{{constants['env']}} DP pipeline recent rundate status: </label>
@@ -78,7 +78,7 @@
         {{dp_analysis_table | safe}}</table>
     </div>
     <div>
-        <a href="{{constants['dp_gap_analysis']}}"> Go to {{constants['env']}} gap analysis full page</a>
+        <a href="{{constants['dp_gap_analysis']}}" target="_blank"> Go to {{constants['env']}} gap analysis full page</a>
     </div>
 
     <div class='container'>
@@ -86,6 +86,6 @@
         <table id="eureka" border="1">{{eureka_rows | safe}}</table>
     </div>
     <div>
-        <a href="{{constants['eureka_link']}}"> Go to {{constants['env']}} Eureka full page</a>
+        <a href="{{constants['eureka_link']}}" target="_blank"> Go to {{constants['env']}} Eureka full page</a>
     </div>
 {% endblock status%}
