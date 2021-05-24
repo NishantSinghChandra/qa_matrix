@@ -31,7 +31,7 @@ def get_rows_from_eureka(endpoint, service_list):
             for row in allRows:
                 if len(row.findAll('td')) == 0:
                     continue
-                if row.findAll('td')[0].text in service_list:
+                if any(map(lambda service: str(row.findAll('td')[0].text).startswith(service), service_list)):
                     releventRows.append(row)
             return head + ''.join([row.prettify() for row in releventRows])
         else:
