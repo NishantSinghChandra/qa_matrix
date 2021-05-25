@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from flask import Flask, render_template, redirect
+from collections import OrderedDict
 import socket
 import socks
 import json
@@ -16,13 +17,14 @@ def index():
 
 @app.route('/<env>')
 def status(env):
-    status = dict()
+    status = OrderedDict()
     if env in envs:
         env_var = qa_constants(env)
         constants = env_var.constants
     else:
         return redirect('/')
-    status['Dataservice'] = get_dataservice_status(env_var)
+    status = get_regression_status(env_var.regression_job_link)
+    # status['Dataservice'] = get_dataservice_status(env_var)
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
     eureka_rows = get_rows_from_eureka(env_var.get_eureka_link(), service_to_monitor_list)
