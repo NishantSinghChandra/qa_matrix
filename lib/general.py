@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as BS
 #from resource.qa_constants import *
+from collections import OrderedDict
+
 def get_rows_from_gap_analysys(endpoint):
     try:
         resp = requests.get(endpoint)
@@ -38,6 +40,26 @@ def get_rows_from_eureka(endpoint, service_list):
             raise Exception
     except:
         return '<p>Eureka page is not accessible</p>'
+
+
+def get_regression_status(url):
+    result = OrderedDict()
+    try:
+        resp = requests.get(url)
+    except:
+        result = {'test execution status': 'Jenkins page is not accessible'}
+    try:
+        page = BS(resp.text, 'lxml')
+        table = page.find('table', id='robot-summary-table')
+        rows = table.findAll('tr')[-1].findAll('td')
+        result['Total'] = rows[0].text
+        result['Failed'] = rows[1].text
+        result['Passed'] = rows[2].text
+        result['Passed %'] = rows[3].text
+
+    except:
+        result = {'test execution': 'jenkin page missing execution details'}
+    return result
 
 if __name__=="__main__":
     from resource.qa_constants import *
