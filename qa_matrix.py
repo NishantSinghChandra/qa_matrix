@@ -27,7 +27,7 @@ def status(env):
     # status['Dataservice'] = get_dataservice_status(env_var)
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
-    eureka_rows = get_rows_from_eureka(env_var.get_eureka_link(), service_to_monitor_list)
+    eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
     return render_template("status.html", result=status, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
 
 

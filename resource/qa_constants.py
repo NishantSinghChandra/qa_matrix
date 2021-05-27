@@ -20,16 +20,21 @@ class qa_constants:
         self.regression_job_img = self.env_properties['Environment'][env]['regression_job_img']
         self.ekg_page = self.env_properties['Environment'][env]['ekg_page']
         self.artifacts = self._load_monitor_json()
-        ip = self.get_gapanalysis_ip()
-        self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(ip)
-        self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(ip)
-        self.eureka_link = self.get_eureka_link()
+        links = self.get_links()
+        self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(links['gapanalysis'])
+        self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(links['gapanalysis'])
+        self.eureka_link = links['eureka']
+        self.create_link = links['crate']
+        self.swagger_link = links['swagger']
+
         self.constants = {
                 'regression_job_link': self.regression_job_link,
                 'regression_job_img': self.regression_job_img,
                 'tp_gap_analysis': self.tp_gap_analysis,
                 'dp_gap_analysis': self.dp_gap_analysis,
                 'eureka_link': self.eureka_link,
+                'swagger_link': links['swagger'],
+                'crate_link': links['crate'],
                 'env': env
                 }
 
@@ -68,20 +73,30 @@ class qa_constants:
         tmp["hosts"] = env_info
         return tmp
 
-    def get_gapanalysis_ip(self):
-        if len(self.artifacts)==0:
+    def get_links(self):
+        if len(self.artifacts) ==0:
             return False
+        links = dict()
         for key, value in self.artifacts['hosts'].iteritems():
-            if key.__contains__('gapanalysis'):
-                return value.keys()[0]
-
-    def get_eureka_link(self):
-        if len(self.artifacts)==0:
-            return False
-        for key, value in self.artifacts['hosts'].iteritems():
-            if key.__contains__('eureka'):
+            if key.__contains__('tpcratereadclient') and 'crate' not in links:
                 ip = value.keys()[0]
-                return "http://{}:8080/eureka/".format(ip)
+                links['crate'] = "http://{}:4200/#!/console".format(ip)
+
+            elif key.__contains__('elasticsearchclient') and 'elasticsearch' not in links:
+                ip = value.keys()[0]
+                links['elasticsearch'] = "http://{}:9200/_plugin/head/".format(ip)
+
+            elif key.__contains__('tpdatasrvcint') and 'swagger' not in links:
+                ip = value.keys()[0]
+                links['swagger'] = "http://{}:8094/swagger-ui.html".format(ip)
+            elif key.__contains__('eureka') and 'eureka' not in links:
+                ip = value.keys()[0]
+                links['eureka'] = "http://{}:8080/eureka/".format(ip)
+            elif key.__contains__('gapanalysis') and 'gapanalysis' not in links:
+                ip = value.keys()[0]
+                links['gapanalysis'] = value.keys()[0]
+        return links
+
 global myenv
 myenv = qa_constants
 
