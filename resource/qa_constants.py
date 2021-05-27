@@ -21,11 +21,11 @@ class qa_constants:
         self.ekg_page = self.env_properties['Environment'][env]['ekg_page']
         self.artifacts = self._load_monitor_json()
         links = self.get_links()
-        self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(links['gapanalysis'])
-        self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(links['gapanalysis'])
-        self.eureka_link = links['eureka']
-        self.create_link = links['crate']
-        self.swagger_link = links['swagger']
+        self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
+        self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
+        self.eureka_link = links.get('eureka')
+        self.create_link = links.get('crate')
+        self.swagger_link = links.get('swagger')
 
         self.constants = {
                 'regression_job_link': self.regression_job_link,
@@ -33,8 +33,8 @@ class qa_constants:
                 'tp_gap_analysis': self.tp_gap_analysis,
                 'dp_gap_analysis': self.dp_gap_analysis,
                 'eureka_link': self.eureka_link,
-                'swagger_link': links['swagger'],
-                'crate_link': links['crate'],
+                'swagger_link': links.get('swagger'),
+                'crate_link': links.get('crate'),
                 'env': env
                 }
 
