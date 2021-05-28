@@ -14,18 +14,19 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 class qa_constants:
     def __init__(self, env):
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
-            self.env_properties = yaml.load(stream)#Loader=yaml.FullLoader
+            env_properties = yaml.load(stream)#Loader=yaml.FullLoader
 
-        self.regression_job_link = self.env_properties['Environment'][env]['regression_job_link']
-        self.regression_job_img = self.env_properties['Environment'][env]['regression_job_img']
-        self.ekg_page = self.env_properties['Environment'][env]['ekg_page']
-        self.artifacts = self._load_monitor_json()
+        self.regression_job_link = env_properties['Environment'][env]['regression_job_link']
+        self.regression_job_img = env_properties['Environment'][env]['regression_job_img']
+        self.ekg_page = env_properties['Environment'][env]['ekg_page']
+        # self.artifacts = self._load_monitor_json()
         links = self.get_links()
         self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
         self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
         self.eureka_link = links.get('eureka')
         self.create_link = links.get('crate')
         self.swagger_link = links.get('swagger')
+        self.tp_data_service_ip = links.get('tp_data_service_ip')
 
         self.constants = {
                 'regression_job_link': self.regression_job_link,
@@ -39,11 +40,7 @@ class qa_constants:
                 }
 
     def get_dataservice_url(self):
-        try:
-            tp_data_service_ip = list(self.artifacts['hosts']['tp-dataservice'].keys())
-        except:
-            return False
-        for ip in tp_data_service_ip:
+        for ip in self.tp_data_service_ip:
             tp_data_service_url = "http://" + ip + ":8094/swagger-ui.html"
             try:
 
@@ -74,10 +71,11 @@ class qa_constants:
         return tmp
 
     def get_links(self):
-        if len(self.artifacts) ==0:
+        artifacts = self._load_monitor_json()
+        if len(artifacts) ==0:
             return False
         links = dict()
-        for key, value in self.artifacts['hosts'].iteritems():
+        for key, value in artifacts['hosts'].iteritems():
             if key.__contains__('tpcratereadclient') and 'crate' not in links:
                 ip = value.keys()[0]
                 links['crate'] = "http://{}:4200/#!/console".format(ip)
@@ -94,7 +92,9 @@ class qa_constants:
                 links['eureka'] = "http://{}:8080/eureka/".format(ip)
             elif key.__contains__('gapanalysis') and 'gapanalysis' not in links:
                 ip = value.keys()[0]
-                links['gapanalysis'] = value.keys()[0]
+                links['gapanalysis'] = ip
+            elif key.__contains__('tp-dataservice') and 'tp-dataservice' not in links:
+                links['tp-dataservice'] = value.keys()
         return links
 
 global myenv

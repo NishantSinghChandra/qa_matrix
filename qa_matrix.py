@@ -20,11 +20,10 @@ def status(env):
     status = OrderedDict()
     if env in envs:
         env_var = qa_constants(env)
-        constants = env_var.constants
+        constants = vars(env_var)
     else:
         return redirect('/')
     status = get_regression_status(env_var.regression_job_link)
-    # status['Dataservice'] = get_dataservice_status(env_var)
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
     eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
