@@ -52,7 +52,7 @@ class qa_constants:
     def _load_monitor_json(self):
         tmp = {"hosts": {}}
         try:
-            b = BS(requests.get(self.ekg_page).content, features="lxml")
+            b = BS(requests.get(self.ekg_page).content)  # features="lxml"
         except requests.exceptions.ConnectionError:
             return {}
         env_info = {}
