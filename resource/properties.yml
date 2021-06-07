@@ -25,6 +25,6 @@ Environment:
   QAS:
     regression_job_link : ''
     regression_job_img : ''
-    dp_regression_job_link : 'http://jenkins.shn.io/job/qa-Ultron-datapipeline-automation-QAAS2/'
-    dp_regression_job_link : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-automation-QAAS2/'
+    dp_regression_job_link : 'http://jenkins.shn.io/job/qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
+    dp_regression_job_link : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     ekg_page : 'http://ekg-awsqastable.shared.int.shn.io/v1/html'
