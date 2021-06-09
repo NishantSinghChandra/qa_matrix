@@ -17,17 +17,19 @@ def index():
 
 @app.route('/<env>')
 def status(env):
-    status = OrderedDict()
+    status_tp = OrderedDict()
+    status_dp = OrderedDict()
     if env in envs:
         env_var = qa_constants(env)
         constants = vars(env_var)
     else:
         return redirect('/')
-    status = get_regression_status(env_var.regression_job_link)
+    status_tp = get_regression_status(env_var.regression_job_link)
+    status_dp = get_regression_status(env_var.dp_regression_job_link)
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
     eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
-    return render_template("status.html", result=status, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
+    return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
 
 
 def get_dataservice_status(env_var):
