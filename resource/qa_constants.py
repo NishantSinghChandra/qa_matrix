@@ -14,10 +14,12 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 class qa_constants:
     def __init__(self, env):
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
-            env_properties = yaml.load(stream)#Loader=yaml.FullLoader
-
+            env_properties = yaml.load(stream, Loader=yaml.FullLoader)#Loader=yaml.FullLoader
+        self.env=env
         self.regression_job_link = env_properties['Environment'][env]['regression_job_link']
         self.regression_job_img = env_properties['Environment'][env]['regression_job_img']
+        self.dp_regression_job_link = env_properties['Environment'][env]['dp_regression_job_link']
+        self.dp_regression_job_img = env_properties['Environment'][env]['dp_regression_job_img']
         self.ekg_page = env_properties['Environment'][env]['ekg_page']
         # self.artifacts = self._load_monitor_json()
         links = self.get_links()
@@ -27,17 +29,6 @@ class qa_constants:
         self.create_link = links.get('crate')
         self.swagger_link = links.get('swagger')
         self.tp_data_service_ip = links.get('tp_data_service_ip')
-
-        self.constants = {
-                'regression_job_link': self.regression_job_link,
-                'regression_job_img': self.regression_job_img,
-                'tp_gap_analysis': self.tp_gap_analysis,
-                'dp_gap_analysis': self.dp_gap_analysis,
-                'eureka_link': self.eureka_link,
-                'swagger_link': links.get('swagger'),
-                'crate_link': links.get('crate'),
-                'env': env
-                }
 
     def get_dataservice_url(self):
         for ip in self.tp_data_service_ip:
@@ -75,6 +66,7 @@ class qa_constants:
         if len(artifacts) ==0:
             return False
         links = dict()
+        links['eureka'] = list()
         for key, value in artifacts['hosts'].iteritems():
             if key.__contains__('tpcratereadclient') and 'crate' not in links:
                 ip = value.keys()[0]
@@ -87,9 +79,9 @@ class qa_constants:
             elif key.__contains__('tpdatasrvcint') and 'swagger' not in links:
                 ip = value.keys()[0]
                 links['swagger'] = "http://{}:8094/swagger-ui.html".format(ip)
-            elif key.__contains__('eureka') and 'eureka' not in links:
+            elif key.__contains__('eureka'):
                 ip = value.keys()[0]
-                links['eureka'] = "http://{}:8080/eureka/".format(ip)
+                links['eureka'].append("http://{}:8080/eureka/".format(ip))
             elif key.__contains__('gapanalysis') and 'gapanalysis' not in links:
                 ip = value.keys()[0]
                 links['gapanalysis'] = ip
