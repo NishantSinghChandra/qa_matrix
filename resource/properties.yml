@@ -13,7 +13,7 @@ Environment:
     regression_job_link: 'http://jenkins.shn.io/job/tp-automation-batch/'
     regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch/'
     dp_regression_job_link: 'http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation-qaar-smoke/'
-    d_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation-qaar-smoke'
+    dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation-qaar-smoke'
 
     ekg_page : 'http://ekg-qaautoregression.shared.int.shn.io/v1/html'
 
