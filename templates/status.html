@@ -35,7 +35,7 @@
             }
     </style>
     <div class='container' style="">
-        <p>{{constants['env']}} regression execution status:</p>
+        <p>{{constants['env']}} TP regression execution status:</p>
         <table class="table" id="status">
             <thead>
                 <td>Component</td>
@@ -43,27 +43,39 @@
             </thead>
         <tr>
             {% block constants%}
-            <td> {{constants['env']}}  Regression</td>
+            <td> {{constants['env']}}  TP Regression Job</td>
             <td><a href="{{constants['regression_job_link']}}" target="_blank"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
                 <img src="{{constants['regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
-            {% endblock %}
-        </tr>
-<!--
-        {% for key, value in result.items() %}
-        <tr>
-            <td>{{key}}</td>
-            {%- if value in ['OK', 'Up', 'Success']-%}
-                <td><font color="green">{{value}}</font></td>
-            {% else %}
-                <td bgcolor=#E25D77 font-weight="bold"><font color="black">{{value}}</font></td>
-            {%- endif -%}
 
         </tr>
+        {% for key, value in result_tp.items() %}
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
         {% endfor %}
--->
-        {% for key, value in result.items() %}
+    </table>
+    </div>
+
+    <div class='container' style="">
+        <p>{{constants['env']}} DP regression execution status:</p>
+        <table class="table" id="status">
+            <thead>
+                <td>Component</td>
+                <td>Status</td>
+            </thead>
+        <tr>
+
+            <td> {{constants['env']}}  DP Regression Job</td>
+            <td><a href="{{constants['dp_regression_job_link']}}" target="_blank"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
+                <img src="{{constants['dp_regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+                </a>
+            </td>
+            {% endblock %}
+        </tr>
+        {% for key, value in result_dp.items() %}
         <tr>
             <td>{{key}}</td>
             <td>{{value}}</td>
