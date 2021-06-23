@@ -15,7 +15,7 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 class qa_constants:
     def __init__(self, env):
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
-            env_properties = yaml.load(stream, Loader=yaml.FullLoader)#Loader=yaml.FullLoader
+            env_properties = yaml.load(stream)#Loader=yaml.FullLoader
         self.env=env
         self.regression_job_link = env_properties['Environment'][env]['regression_job_link']
         self.regression_job_img = env_properties['Environment'][env]['regression_job_img']
