@@ -1,5 +1,6 @@
 import yaml
 import os
+import json
 from bs4 import BeautifulSoup as BS
 import requests
 qaar = 'QAAR'
@@ -14,7 +15,7 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 class qa_constants:
     def __init__(self, env):
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
-            env_properties = yaml.load(stream)#Loader=yaml.FullLoader
+            env_properties = yaml.load(stream, Loader=yaml.FullLoader)#Loader=yaml.FullLoader
         self.env=env
         self.regression_job_link = env_properties['Environment'][env]['regression_job_link']
         self.regression_job_img = env_properties['Environment'][env]['regression_job_img']
@@ -26,7 +27,7 @@ class qa_constants:
         self.tp_gap_analysis = 'http://{}:5253/tpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
         self.dp_gap_analysis = 'http://{}:5253/dpEmrGapAnalysis.html'.format(links.get('gapanalysis'))
         self.eureka_link = links.get('eureka')
-        self.create_link = links.get('crate')
+        self.crate_link = links.get('crate')
         self.swagger_link = links.get('swagger')
         self.tp_data_service_ip = links.get('tp_data_service_ip')
 
@@ -43,23 +44,24 @@ class qa_constants:
     def _load_monitor_json(self):
         tmp = {"hosts": {}}
         try:
-            b = BS(requests.get(self.ekg_page).content, features="lxml")
+            ekg_obj = json.loads(requests.get(self.ekg_page).content)
+
         except requests.exceptions.ConnectionError:
             return {}
         env_info = {}
-        for _ in b.findAll("tr")[1:]:
-            component = _.findAll("td")[0].text
-            if (component == 'None') or (component == 'ekg'):
-                component = _.findAll("td")[2].text
-            row = _.findAll("td")[1:]
-            if component not in env_info:
-                env_info[component] = {}
-            if str(row[0].text) in ['None', 'default', 'ekg']:
-                env_info[component][str(row[2].text)] = str(row[1].text)
+        for key, value in ekg_obj['data'].items():
+            if value.get('name'):
+                component = str(value.get('name').split('-')[0])
+                if component not in env_info.keys():
+                    env_info[component] = [key]
+                else:
+                    env_info[component].append(key)
             else:
-                env_info[component][str(row[2].text)] = str(row[0].text)
+                print(value)
+
         tmp["hosts"] = env_info
         return tmp
+
 
     def get_links(self):
         artifacts = self._load_monitor_json()
@@ -69,24 +71,24 @@ class qa_constants:
         links['eureka'] = list()
         for key, value in artifacts['hosts'].iteritems():
             if key.__contains__('tpcratereadclient') and 'crate' not in links:
-                ip = value.keys()[0]
+                ip = value[0]
                 links['crate'] = "http://{}:4200/#!/console".format(ip)
 
             elif key.__contains__('elasticsearchclient') and 'elasticsearch' not in links:
-                ip = value.keys()[0]
+                ip = value[0]
                 links['elasticsearch'] = "http://{}:9200/_plugin/head/".format(ip)
 
             elif key.__contains__('tpdatasrvcint') and 'swagger' not in links:
-                ip = value.keys()[0]
+                ip = value[0]
                 links['swagger'] = "http://{}:8094/swagger-ui.html".format(ip)
             elif key.__contains__('eureka'):
-                ip = value.keys()[0]
-                links['eureka'].append("http://{}:8080/eureka/".format(ip))
+                if len(value) != 0:
+                    links['eureka'] = ["http://{}:8080/eureka/".format(ip) for ip in value]
             elif key.__contains__('gapanalysis') and 'gapanalysis' not in links:
-                ip = value.keys()[0]
+                ip = value[0]
                 links['gapanalysis'] = ip
             elif key.__contains__('tp-dataservice') and 'tp-dataservice' not in links:
-                links['tp-dataservice'] = value.keys()
+                links['tp-dataservice'] = value
         return links
 
 global myenv

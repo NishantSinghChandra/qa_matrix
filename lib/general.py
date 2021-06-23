@@ -21,25 +21,28 @@ def get_rows_from_gap_analysys(endpoint):
 
 
 def get_rows_from_eureka(endpoint, service_list):
-    # service_to_monitor_list = service_to_monitor_list
-    try:
-        resp = requests.get(endpoint)
-        if resp.status_code == 200:
-            page = BS(resp.text, "lxml")
-            allRows = page.find("table").findAll("tr")
-            head = allRows[0].prettify().replace('tr', 'thead')
-            releventRows = []
-            page.find("table").findAll("tr")[3].findAll('td')[0].text
-            for row in allRows:
-                if len(row.findAll('td')) == 0:
-                    continue
-                if any(map(lambda service: str(row.findAll('td')[0].text).startswith(service), service_list)):
-                    releventRows.append(row)
-            return head + ''.join([row.prettify() for row in releventRows])
-        else:
-            raise Exception
-    except:
-        return '<p>Eureka page is not accessible</p>'
+    # try:
+    for link in endpoint:
+        try:
+            resp = requests.get(link)
+            if resp.status_code == 200:
+                page = BS(resp.text, "lxml")
+                allRows = page.find("table").findAll("tr")
+                head = allRows[0].prettify().replace('tr', 'thead')
+                releventRows = []
+                #page.find("table").findAll("tr")[3].findAll('td')[0].text
+                for row in allRows:
+                    if len(row.findAll('td')) == 0:
+                        continue
+                    if any(map(lambda service: str(row.findAll('td')[0].text).startswith(service), service_list)):
+                        releventRows.append(row)
+                return head + ''.join([row.prettify() for row in releventRows])
+        except:
+            pass
+    else:
+        raise Exception
+    # except:
+    #     return '<p>Eureka page is not accessible</p>'
 
 
 def get_regression_status(url):

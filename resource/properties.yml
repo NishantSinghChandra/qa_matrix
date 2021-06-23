@@ -5,8 +5,7 @@ Environment:
     dp_regression_job_link : "http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation/"
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation'
 
-    ekg_page: 'http://ekg-qat.shared.int.shn.io/v1/html'
-
+    ekg_page: 'http://ekg-qat.shared.int.shn.io/v1/json'
 
 
   QAAR:
@@ -15,18 +14,18 @@ Environment:
     dp_regression_job_link: 'http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation-qaar-smoke/'
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation-qaar-smoke'
 
-    ekg_page : 'http://ekg-qaautoregression.shared.int.shn.io/v1/html'
+    ekg_page : 'http://ekg-qaautoregression.shared.int.shn.io/v1/json'
 
   GovQA:
     regression_job_link : 'http://jenkins.shn.io/job/govqa-tp-automation-batch-py3/'
     regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:govqa-tp-automation-batch-py3'
     dp_regression_job_link: 'http://jenkins.shn.io/job/qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     dp_regression_job_img: 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
-    ekg_page : 'http://ekg-govqa.shared.int.shn.io/v1/html'
+    ekg_page : 'http://ekg-govqa.shared.int.shn.io/v1/json'
 
   QAS:
     regression_job_link : ''
     regression_job_img : ''
     dp_regression_job_link : 'http://jenkins.shn.io/job/qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
-    ekg_page : 'http://ekg-awsqastable.shared.int.shn.io/v1/html'
+    ekg_page : 'http://ekg-awsqastable.shared.int.shn.io/v1/json'
