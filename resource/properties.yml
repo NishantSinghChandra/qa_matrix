@@ -1,7 +1,7 @@
 Environment:
   QAT:
-    regression_job_link : "http://jenkins.shn.io/job/tp-automation-batch-py3/"
-    regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch-py3'
+    regression_job_link : "http://jenkins.shn.io/job/TP-pipeline-validation-qat/"
+    regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:TP-pipeline-validation-qat'
     dp_regression_job_link : "http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation/"
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation'
 
@@ -9,23 +9,23 @@ Environment:
 
 
   QAAR:
-    regression_job_link: 'http://jenkins.shn.io/job/tp-automation-batch/'
-    regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:tp-automation-batch/'
+    regression_job_link: 'http://jenkins.shn.io/job/TP-pipeline-validation-qaar/'
+    regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:TP-pipeline-validation-qaar/'
     dp_regression_job_link: 'http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation-qaar-smoke/'
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation-qaar-smoke'
 
     ekg_page : 'http://ekg-qaautoregression.shared.int.shn.io/v1/json'
 
   GovQA:
-    regression_job_link : 'http://jenkins.shn.io/job/govqa-tp-automation-batch-py3/'
-    regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:govqa-tp-automation-batch-py3'
+    regression_job_link: 'http://jenkins.shn.io/job/TP-pipeline-validation-govqa/'
+    regression_job_img: 'http://jenkins.shn.io/buildStatus/icon?job:TP-pipeline-validation-govqa/'
     dp_regression_job_link: 'http://jenkins.shn.io/job/qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     dp_regression_job_img: 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     ekg_page : 'http://ekg-govqa.shared.int.shn.io/v1/json'
 
   QAS:
-    regression_job_link : ''
-    regression_job_img : ''
+    regression_job_link: 'http://jenkins.shn.io/job/TP-pipeline-validation-qas/'
+    regression_job_img: 'http://jenkins.shn.io/buildStatus/icon?job:TP-pipeline-validation-qas/'
     dp_regression_job_link : 'http://jenkins.shn.io/job/qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-automation-Smoke-AWS-QAS_EMR/'
     ekg_page : 'http://ekg-awsqastable.shared.int.shn.io/v1/json'
