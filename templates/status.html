@@ -45,12 +45,12 @@
             {% block constants%}
             <td> {{constants['env']}}  TP Regression Job</td>
             <td><a href="{{constants['regression_job_link']}}" target="_blank"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
-                <img src="{{constants['regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+                {{result_tp.values()[0]}}<!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
 
         </tr>
-        {% for key, value in result_tp.items() %}
+        {% for key, value in result_tp.items()[1:] %}
         <tr>
             <td>{{key}}</td>
             <td>{{value}}</td>
@@ -70,12 +70,12 @@
 
             <td> {{constants['env']}}  DP Regression Job</td>
             <td><a href="{{constants['dp_regression_job_link']}}" target="_blank"><!--http://jenkins.shn.io/job/tp-automation-batch-py3/-->
-                <img src="{{constants['dp_regression_job_img']}}"><!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
+                {{result_dp.values()[0]}}<!--http://jenkins.shn.io/buildStatus/icon?job=tp-automation-batch-py3-->
                 </a>
             </td>
             {% endblock %}
         </tr>
-        {% for key, value in result_dp.items() %}
+        {% for key, value in result_dp.items()[1:] %}
         <tr>
             <td>{{key}}</td>
             <td>{{value}}</td>
