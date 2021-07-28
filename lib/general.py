@@ -40,7 +40,7 @@ def get_rows_from_eureka(endpoint, service_list):
         except:
             pass
     else:
-        raise Exception
+        return '<p>Eureka page is not accessible</p>'
     # except:
     #     return '<p>Eureka page is not accessible</p>'
 
@@ -48,13 +48,15 @@ def get_rows_from_eureka(endpoint, service_list):
 def get_regression_status(url):
     result = OrderedDict()
     try:
-        resp = requests.get(url)
+        resp = requests.get(url+'/lastCompletedBuild')
     except:
         result = {'test execution status': 'Jenkins page is not accessible'}
     try:
         page = BS(resp.text, 'lxml')
+        status = page.find('h1').find('img').attrs['alt']
         table = page.find('table', id='robot-summary-table')
         rows = table.findAll('tr')[-1].findAll('td')
+        result['Status']= status
         result['Total'] = rows[0].text
         result['Failed'] = rows[1].text
         result['Passed'] = rows[2].text
@@ -63,6 +65,7 @@ def get_regression_status(url):
     except:
         result = {'test execution': 'jenkin page missing execution details'}
     return result
+
 
 if __name__=="__main__":
     from resource.qa_constants import *
