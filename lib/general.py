@@ -14,6 +14,7 @@ def get_rows_from_gap_analysys(endpoint):
             releventRows = []
             for row in allRows[-7:-1]:
                 releventRows.append(row)
+            logging.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
             return head + ''.join([row.prettify() for row in releventRows])
         else:
             raise Exception
@@ -38,6 +39,7 @@ def get_rows_from_eureka(endpoint, service_list):
                         continue
                     if any(map(lambda service: str(row.findAll('td')[0].text).startswith(service), service_list)):
                         releventRows.append(row)
+                logging.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
                 return head + ''.join([row.prettify() for row in releventRows])
         except:
             pass
@@ -52,6 +54,7 @@ def get_regression_status(url):
     result = OrderedDict()
     try:
         resp = requests.get(url+'/lastCompletedBuild')
+        logging.info("{} is accessable access {} status : {}".format(url, resp.status_code))
     except:
         result = {'test execution status': 'Jenkins page is not accessible'}
     try:
