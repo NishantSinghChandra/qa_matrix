@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as BS
 #from resource.qa_constants import *
 from collections import OrderedDict
+import logging
 
 def get_rows_from_gap_analysys(endpoint):
     try:
@@ -17,6 +18,7 @@ def get_rows_from_gap_analysys(endpoint):
         else:
             raise Exception
     except:
+        logging.info("request failed to access {} status : {}".format(endpoint, resp.status_code))
         return '<p>Gap analysis page is not accessible</p>'
 
 
@@ -40,6 +42,7 @@ def get_rows_from_eureka(endpoint, service_list):
         except:
             pass
     else:
+        logging.info("request failed to access {} status : {}".format(endpoint, resp.status_code))
         return '<p>Eureka page is not accessible</p>'
     # except:
     #     return '<p>Eureka page is not accessible</p>'
@@ -63,6 +66,7 @@ def get_regression_status(url):
         result['Passed %'] = rows[3].text
 
     except:
+        logging.info("request failed to access {} status : {}".format(url, resp.status_code))
         result = {'test execution': 'jenkin page missing execution details'}
     return result
 
