@@ -17,9 +17,10 @@ def get_rows_from_gap_analysys(endpoint):
             logging.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
             return head + ''.join([row.prettify() for row in releventRows])
         else:
+            logging.error("request failed to access {} status : {}".format(endpoint,resp.status_code))
             raise Exception
     except:
-        logging.info("request failed to access {} status : {}".format(endpoint, resp.status_code))
+        logging.error("request failed to access {} status : {}".format(endpoint, resp.status_code))
         return '<p>Gap analysis page is not accessible</p>'
 
 
@@ -54,6 +55,8 @@ def get_regression_status(url):
     result = OrderedDict()
     try:
         resp = requests.get(url+'/lastCompletedBuild')
+        if resp.status_code != 200:
+            logging.error("{} failed to access {} status : {}".format(url, resp.status_code))
         logging.info("{} is accessable access {} status : {}".format(url, resp.status_code))
     except:
         result = {'test execution status': 'Jenkins page is not accessible'}

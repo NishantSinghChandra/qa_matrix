@@ -6,6 +6,7 @@ import socket
 import socks
 import json
 from resource.qa_constants import *
+import logging
 from lib.general import *
 app = Flask(__name__)
 
@@ -28,7 +29,8 @@ def status(env):
     status_dp = get_regression_status(env_var.dp_regression_job_link)
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
-    eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
+    # eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
+    eureka_rows = None
     return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
 
 
