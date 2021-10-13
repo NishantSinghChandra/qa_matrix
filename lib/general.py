@@ -3,10 +3,11 @@ from bs4 import BeautifulSoup as BS
 #from resource.qa_constants import *
 from collections import OrderedDict
 import logging
+timeout = 5
 
 def get_rows_from_gap_analysys(endpoint):
     try:
-        resp = requests.get(endpoint)
+        resp = requests.get(endpoint, timeout=timeout)
         if resp.status_code == 200:
             page = BS(resp.text, "lxml")
             allRows = page.findAll("table")[1].findAll("tr")
@@ -28,7 +29,7 @@ def get_rows_from_eureka(endpoint, service_list):
     # try:
     for link in endpoint:
         try:
-            resp = requests.get(link)
+            resp = requests.get(link, timeout=timeout)
             if resp.status_code == 200:
                 page = BS(resp.text, "lxml")
                 allRows = page.find("table").findAll("tr")
@@ -54,7 +55,7 @@ def get_rows_from_eureka(endpoint, service_list):
 def get_regression_status(url):
     result = OrderedDict()
     try:
-        resp = requests.get(url+'/lastCompletedBuild')
+        resp = requests.get(url+'/lastCompletedBuild', timeout=timeout)
         if resp.status_code != 200:
             logging.error("{} failed to access {} status : {}".format(url, resp.status_code))
         logging.info("{} is accessable access {} status : {}".format(url, resp.status_code))
