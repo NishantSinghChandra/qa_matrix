@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup as BS
 from collections import OrderedDict
 import logging
 timeout = 5
-
+log = logging.getLogger('qa_matrix.general')
 def get_rows_from_gap_analysys(endpoint):
     try:
         resp = requests.get(endpoint, timeout=timeout)
@@ -15,13 +15,13 @@ def get_rows_from_gap_analysys(endpoint):
             releventRows = []
             for row in allRows[-7:-1]:
                 releventRows.append(row)
-            logging.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
+            log.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
             return head + ''.join([row.prettify() for row in releventRows])
         else:
-            logging.error("request failed to access {} status : {}".format(endpoint,resp.status_code))
+            log.error("request failed to access {} status : {}".format(endpoint,resp.status_code))
             raise Exception
     except:
-        logging.error("request failed to access {} status : {}".format(endpoint, resp.status_code))
+        log.error("request failed to access {} status : {}".format(endpoint, resp.status_code))
         return '<p>Gap analysis page is not accessible</p>'
 
 
@@ -41,12 +41,12 @@ def get_rows_from_eureka(endpoint, service_list):
                         continue
                     if any(map(lambda service: str(row.findAll('td')[0].text).startswith(service), service_list)):
                         releventRows.append(row)
-                logging.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
+                log.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
                 return head + ''.join([row.prettify() for row in releventRows])
         except:
             pass
     else:
-        logging.info("request failed to access {} status : {}".format(endpoint, resp.status_code))
+        log.info("request failed to access {} status : {}".format(endpoint, resp.status_code))
         return '<p>Eureka page is not accessible</p>'
     # except:
     #     return '<p>Eureka page is not accessible</p>'
@@ -57,8 +57,8 @@ def get_regression_status(url):
     try:
         resp = requests.get(url+'/lastCompletedBuild', timeout=timeout)
         if resp.status_code != 200:
-            logging.error("{} failed to access {} status : {}".format(url, resp.status_code))
-        logging.info("{} is accessable access {} status : {}".format(url, resp.status_code))
+            log.error("{} failed to access {} status : {}".format(url, resp.status_code))
+        log.info("{} is accessable access {} status : {}".format(url, resp.status_code))
     except:
         result = {'test execution status': 'Jenkins page is not accessible'}
     try:
@@ -73,7 +73,7 @@ def get_regression_status(url):
         result['Passed %'] = rows[3].text
 
     except:
-        logging.info("request failed to access {} status : {}".format(url, resp.status_code))
+        log.info("request failed to access {} status : {}".format(url, resp.status_code))
         result = {'test execution': 'jenkin page missing execution details'}
     return result
 
