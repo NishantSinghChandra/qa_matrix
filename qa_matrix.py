@@ -9,7 +9,7 @@ from resource.qa_constants import *
 import logging
 from lib.general import *
 app = Flask(__name__)
-app.logger.setLevel(app.logger.info)
+app.logger.setLevel(logging.INFO)
 
 
 @app.route('/')
