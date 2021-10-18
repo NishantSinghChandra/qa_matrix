@@ -9,7 +9,8 @@ from resource.qa_constants import *
 import logging
 from lib.general import *
 app = Flask(__name__)
-logging.basicConfig(filename='qa_matrix.log', level=logging.INFO)
+app.logger.setLevel(app.logger.info)
+
 
 @app.route('/')
 def index():
@@ -25,21 +26,21 @@ def status(env):
         constants = vars(env_var)
     else:
         return redirect('/')
-    logging.info('fetch tp reg status')
+    app.logger.info('fetch tp reg status')
     status_tp = get_regression_status(env_var.regression_job_link)
-    logging.info('Done fetching tp reg status')
+    app.logger.info('Done fetching tp reg status')
 
-    logging.info('fetch dp reg status')
+    app.logger.info('fetch dp reg status')
     status_dp = get_regression_status(env_var.dp_regression_job_link)
-    logging.info('Done fetching dp reg status')
+    app.logger.info('Done fetching dp reg status')
 
-    logging.info('fetch tp pipeline stauts')
+    app.logger.info('fetch tp pipeline stauts')
     tp_rows = get_rows_from_gap_analysys(env_var.tp_gap_analysis)
-    logging.info('Done fetching tp pipeline stauts')
+    app.logger.info('Done fetching tp pipeline stauts')
 
-    logging.info('fetch dp pipeline stauts')
+    app.logger.info('fetch dp pipeline stauts')
     dp_rows = get_rows_from_gap_analysys(env_var.dp_gap_analysis)
-    logging.info('Done fetching dp pipeline stauts')
+    app.logger.info('Done fetching dp pipeline stauts')
     # eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
     eureka_rows = None
     return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
