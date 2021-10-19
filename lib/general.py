@@ -21,7 +21,7 @@ def get_rows_from_gap_analysys(endpoint):
             log.error("request failed to access {} status : {}".format(endpoint,resp.status_code))
             raise Exception
     except:
-        log.error("request failed to access {} status : {}".format(endpoint, resp.status_code))
+        log.error("request failed to access {} status : {}".format(endpoint, 'No response code'))
         return '<p>Gap analysis page is not accessible</p>'
 
 
