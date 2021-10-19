@@ -30,7 +30,7 @@ def getStatus():
         # get_rows_from_eureka(qa_constants(env).eureka_link, service_to_monitor_list)
 
 
-# getStatus()
+getStatus()
 scheduler.add_job(func=getStatus, trigger='interval', seconds=900)
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())
