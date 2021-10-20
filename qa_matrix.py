@@ -17,16 +17,32 @@ app.logger.setLevel(logging.INFO)
 scheduler = BackgroundScheduler()
 
 status = dict()
+qat_constants = qa_constants(qat)
+qaar_constants = qa_constants(qaar)
+govqa_constants = qa_constants(govqa)
+qas_constants = qa_constants(qas)
+
+def _getConstants(env):
+    if env == qat:
+        constants = qat_constants
+    elif env == qaar:
+        constants = qaar_constants
+    elif env == govqa:
+        constants = govqa_constants
+    elif env == qas:
+        constants = qas_constants
+    return constants
 
 
 def getStatus():
     print('into scheduled job')
     for env in envs:
         status[env] = dict()
-        status[env]['status_tp'] = get_regression_status(qa_constants(env).regression_job_link)
-        status[env]['status_dp'] = get_regression_status(qa_constants(env).dp_regression_job_link)
-        status[env]['tp_rows'] = get_rows_from_gap_analysys(qa_constants(env).tp_gap_analysis)
-        status[env]['dp_rows'] = get_rows_from_gap_analysys(qa_constants(env).dp_gap_analysis)
+        constants = _getConstants(env)
+        status[env]['status_tp'] = get_regression_status(constants.regression_job_link)
+        status[env]['status_dp'] = get_regression_status(constants.dp_regression_job_link)
+        status[env]['tp_rows'] = get_rows_from_gap_analysys(constants.tp_gap_analysis)
+        status[env]['dp_rows'] = get_rows_from_gap_analysys(constants.dp_gap_analysis)
         # get_rows_from_eureka(qa_constants(env).eureka_link, service_to_monitor_list)
 
 
@@ -45,7 +61,7 @@ def index():
 def get_status(env):
 
     if env in envs:
-        env_var = qa_constants(env)
+        env_var = _getConstants(env)
         constants = vars(env_var)
     else:
         return redirect('/')
@@ -67,6 +83,7 @@ def get_status(env):
     # eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
     eureka_rows = None
     return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
+
 
 
 def get_dataservice_status(env_var):
@@ -103,4 +120,4 @@ def _request_to_data_service(ds_url, endpoint, request_data=None,
 if __name__ == "__main__":
     socks.set_default_proxy(socks.SOCKS5, "localhost", int(9997))
     socket.socket = socks.socksocket
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
