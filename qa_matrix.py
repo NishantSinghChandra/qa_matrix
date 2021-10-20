@@ -33,7 +33,7 @@ def _getConstants(env):
         constants = qas_constants
     return constants
 
-
+@app.route('/get_status')
 def getStatus():
     print('into scheduled job')
     for env in envs:
@@ -44,12 +44,13 @@ def getStatus():
         status[env]['tp_rows'] = get_rows_from_gap_analysys(constants.tp_gap_analysis)
         status[env]['dp_rows'] = get_rows_from_gap_analysys(constants.dp_gap_analysis)
         # get_rows_from_eureka(qa_constants(env).eureka_link, service_to_monitor_list)
+    return redirect('/')
 
 
-getStatus()
-scheduler.add_job(func=getStatus, trigger='interval', seconds=900)
-scheduler.start()
-atexit.register(lambda: scheduler.shutdown())
+# getStatus()
+# scheduler.add_job(func=getStatus, trigger='interval', seconds=900)
+# scheduler.start()
+# atexit.register(lambda: scheduler.shutdown())
 
 
 @app.route('/')
@@ -61,28 +62,28 @@ def index():
 def get_status(env):
 
     if env in envs:
-        env_var = _getConstants(env)
-        constants = vars(env_var)
+        constants = _getConstants(env)
+        env_var = vars(constants)
     else:
         return redirect('/')
     app.logger.info('fetch tp reg status')
-    status_tp = status[env]['status_tp']
+    status_tp = get_regression_status(constants.regression_job_link) #status[env]['status_tp']
     app.logger.info('Done fetching tp reg status')
 
     app.logger.info('fetch dp reg status')
-    status_dp = status[env]['status_dp']
+    status_dp = get_regression_status(constants.dp_regression_job_link) #status[env]['status_dp']
     app.logger.info('Done fetching dp reg status')
 
     app.logger.info('fetch tp pipeline stauts')
-    tp_rows = status[env]['tp_rows']
+    tp_rows = get_rows_from_gap_analysys(constants.tp_gap_analysis) #status[env]['tp_rows']
     app.logger.info('Done fetching tp pipeline stauts')
 
     app.logger.info('fetch dp pipeline stauts')
-    dp_rows = status[env]['dp_rows']
+    dp_rows = get_rows_from_gap_analysys(constants.dp_gap_analysis) #status[env]['dp_rows']
     app.logger.info('Done fetching dp pipeline stauts')
     # eureka_rows = get_rows_from_eureka(env_var.eureka_link, service_to_monitor_list)
     eureka_rows = None
-    return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=constants, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
+    return render_template("status.html", result_tp=status_tp, result_dp=status_dp, constants=env_var, tp_analysis_table=tp_rows, dp_analysis_table=dp_rows, eureka_rows=eureka_rows)
 
 
 
