@@ -12,7 +12,8 @@ service_to_monitor_list = ['KAFKA', 'SI-SERV', 'MERLIN', 'NETACUITY-SERVER', 'TP
                            'DASHBOARD']
 cur_path = os.path.dirname(os.path.realpath(__file__))
 
-class qa_constants:
+
+class qa_constants(object):
     def __init__(self, env):
         with open(os.path.join(cur_path, "properties.yml"), 'r') as stream:
             env_properties = yaml.load(stream)#Loader=yaml.FullLoader
@@ -44,7 +45,7 @@ class qa_constants:
     def _load_monitor_json(self):
         tmp = {"hosts": {}}
         try:
-            ekg_obj = json.loads(requests.get(self.ekg_page).content)
+            ekg_obj = json.loads(requests.get(self.ekg_page).text)
 
         except requests.exceptions.ConnectionError:
             return {}
@@ -69,7 +70,7 @@ class qa_constants:
             return False
         links = dict()
         links['eureka'] = list()
-        for key, value in artifacts['hosts'].iteritems():
+        for key, value in artifacts['hosts'].items():
             if key.__contains__('tpcratereadclient') and 'crate' not in links:
                 ip = value[0]
                 links['crate'] = "http://{}:4200/#!/console".format(ip)
@@ -91,10 +92,8 @@ class qa_constants:
                 links['tp-dataservice'] = value
         return links
 
-global myenv
-myenv = qa_constants
 
 
 if __name__ == "__main__":
     qat = qa_constants('QAT')
-    print qat.set_gapanalysis_links()
+    print(qat.set_gapanalysis_links())
