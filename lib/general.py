@@ -9,7 +9,7 @@ def get_rows_from_gap_analysys(endpoint):
     try:
         resp = requests.get(endpoint, timeout=timeout)
         if resp.status_code == 200:
-            page = BS(resp.text, "lxml")
+            page = BS(resp.text, "html.parser")
             allRows = page.findAll("table")[1].findAll("tr")
             head = allRows[0].prettify().replace('tr', 'thead')
             releventRows = []
@@ -18,7 +18,7 @@ def get_rows_from_gap_analysys(endpoint):
             log.info("{} Endpint is accessable with status {}.".format(endpoint, resp.status_code))
             return head + ''.join([row.prettify() for row in releventRows])
         else:
-            log.error("request failed to access {} status : {}".format(endpoint,resp.status_code))
+            log.error("request failed to access {} status : {}".format(endpoint, resp.status_code))
             raise Exception
     except:
         log.error("request failed to access {} status : {}".format(endpoint, 'No response code'))
@@ -31,7 +31,7 @@ def get_rows_from_eureka(endpoint, service_list):
         try:
             resp = requests.get(link, timeout=timeout)
             if resp.status_code == 200:
-                page = BS(resp.text, "lxml")
+                page = BS(resp.text, "html.parser")
                 allRows = page.find("table").findAll("tr")
                 head = allRows[0].prettify().replace('tr', 'thead')
                 releventRows = []
