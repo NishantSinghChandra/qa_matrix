@@ -57,12 +57,12 @@ def get_regression_status(url):
     try:
         resp = requests.get(url+'/lastCompletedBuild', timeout=timeout)
         if resp.status_code != 200:
-            log.error("{} failed to access {} status : {}".format(url, resp.status_code))
-        log.info("{} is accessable access {} status : {}".format(url, resp.status_code))
+            log.error("failed to access {} status : {}".format(url, resp.status_code))
+        log.info("{} is accessable status : {}".format(url, resp.status_code))
     except:
         result = {'test execution status': 'Jenkins page is not accessible'}
     try:
-        page = BS(resp.text, 'lxml')
+        page = BS(resp.text, 'html.parser')
         status = page.find('h1').find('img').attrs['alt']
         table = page.find('table', id='robot-summary-table')
         rows = table.findAll('tr')[-1].findAll('td')
