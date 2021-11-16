@@ -5,7 +5,7 @@ sys.path.append('./..')
 
 artifact_url = "http://jenkins.shn.io/job/EngTools-list-articorp-releases/lastSuccessfulBuild/artifact/corp-releases.properties/*view*/"
 artifact_json = 'http://jenkins.shn.io/job/EngTools-list-articorp-releases/lastSuccessfulBuild/artifact/artifacts.json/*view*/'
-
+timeout = 10
 
 class VpnException(Exception):
     pass
@@ -23,7 +23,7 @@ class ReleaseRecipe:
 
     def refresh_artifacts(self):
         try:
-            resp = requests.get(self.artifact_url, timeout=4)
+            resp = requests.get(self.artifact_url, timeout=timeout)
         except Exception as e:
             raise type(e)("Not able to reach VPN...\nConnect to McAfee VPN.")
         if resp.status_code != 200:

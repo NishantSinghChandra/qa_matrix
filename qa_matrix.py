@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from flask import Flask, render_template, redirect
-from lib.ReleaseRecepie import ReleaseRecipe
+from lib.ReleaseRecipe import ReleaseRecipe
 # from collections import OrderedDict
 import socket
 import socks
