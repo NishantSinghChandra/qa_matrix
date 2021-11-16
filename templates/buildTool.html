@@ -1,0 +1,25 @@
+{% extends 'menu.html' %}
+{% block status %}
+<text>Click on the buttons to get the respective builds.</text>
+<body>
+    <script type="text/javascript">
+        function formatNewline() {
+            var myInput = document.getElementById('builds').innerHTML;
+            document.getElementById('builds').innerHTML = myInput.replaceAll(", ", "\n");
+        }
+        function formatComma() {
+            var myInput = document.getElementById('builds').innerHTML;
+            document.getElementById('builds').innerHTML = myInput.replaceAll("\n", ", ");
+        }
+    </script>
+    <input type='button' onclick="location.href = '/buildTool/tp';" value='TP trunk' />
+    <input type='button' onclick="location.href = '/buildTool/dp';" value='DP trunk' />
+    <br>
+    <input type='button' onclick='formatNewline()' value='\n' />
+    <input type='button' onclick='formatComma()' value='.., ..' />
+    <textarea id="builds" rows="10" cols="500">{{build_json}}
+    </textarea>
+    <!--<input type='text' id='myInput' value='Enter Text Here' />-->
+
+</body>
+{% endblock status %}

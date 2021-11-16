@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from flask import Flask, render_template, redirect
-from collections import OrderedDict
+from lib.ReleaseRecepie import ReleaseRecipe
+# from collections import OrderedDict
 import socket
 import socks
+import requests as req
 import json
 from resource.qa_constants import *
-import logging
-from apscheduler.schedulers.background import BackgroundScheduler
+# import logging
+# from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
 from lib.general import *
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
 
-scheduler = BackgroundScheduler()
+
+# scheduler = BackgroundScheduler()
 
 status = dict()
 qat_constants = qa_constants(qat)
@@ -46,6 +49,23 @@ def getStatus():
         # get_rows_from_eureka(qa_constants(env).eureka_link, service_to_monitor_list)
     return redirect('/')
 
+@app.route('/buildTool/<application>')
+def buildTool(application):
+    build_json = None
+    if application in ['tp', 'dp']:
+        try:
+            rr = ReleaseRecipe()
+            if str(application) == 'tp':
+                build_json = rr.get_builds_with_name('tp-latest_trunk')
+            elif str(application) == 'dp':
+                build_json = rr.get_builds_with_name('dp-latest_trunk')
+        except:
+            build_json = 'error'
+    elif application == None:
+        pass
+    else:
+        build_json = 'Not Found'
+    return render_template('buildTool.html', build_json=build_json)
 
 # getStatus()
 # scheduler.add_job(func=getStatus, trigger='interval', seconds=900)
