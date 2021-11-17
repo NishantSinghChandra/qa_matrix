@@ -2,7 +2,7 @@ Environment:
   QAT:
     regression_job_link : "http://jenkins.shn.io/job/TP-pipeline-validation-qat/"
     regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:TP-pipeline-validation-qat'
-    dp_regression_job_link : "http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation/"
+    dp_regression_job_link : "http://jenkins.shn.io/job/qa-Ultron-datapipeline-workflow-automation-EMR-smoke/"
     dp_regression_job_img : 'http://jenkins.shn.io/buildStatus/icon?job:qa-Ultron-datapipeline-workflow-automation'
 
     ekg_page: 'http://ekg-qat.shared.int.shn.io/v1/json'
