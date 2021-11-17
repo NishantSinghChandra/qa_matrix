@@ -65,9 +65,9 @@ class ReleaseRecipe:
 
     def _get_recipe_component_list(self, pipeline):
         if pipeline == 'tp':
-            recipe_file = 'resource/tp_recipe_components.txt'
+            recipe_file = '/var/www/qa_matrix/qa_matrix/resource/tp_recipe_components.txt'
         else:
-            recipe_file = 'resource/dp_recipe_components.txt'
+            recipe_file = '/var/www/qa_matrix/qa_matrix/resource/dp_recipe_components.txt'
 
         try:
             with open(recipe_file, 'r') as recipe:
