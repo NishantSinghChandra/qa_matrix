@@ -64,7 +64,7 @@ def buildTool(application):
     elif application == None:
         pass
     else:
-        build_json = 'Not Found'
+        build_json = 'Click on a pipeline button to get the trunk builds'
     return render_template('buildTool.html', build_json=build_json)
 
 # getStatus()
