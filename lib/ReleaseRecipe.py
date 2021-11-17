@@ -1,6 +1,9 @@
 import requests
 import re
+import os
 from os import sys
+import logging
+log = logging.getLogger('qa_matrix.ReleaseRecipe')
 sys.path.append('./..')
 
 artifact_url = "http://jenkins.shn.io/job/EngTools-list-articorp-releases/lastSuccessfulBuild/artifact/corp-releases.properties/*view*/"
@@ -66,8 +69,12 @@ class ReleaseRecipe:
         else:
             recipe_file = 'resource/dp_recipe_components.txt'
 
-        with open(recipe_file, 'r') as recipe:
-            return [line.strip() for line in recipe]
+        try:
+            with open(recipe_file, 'r') as recipe:
+                return [line.strip() for line in recipe]
+        except Exception as e:
+            log.info(os.listdir('.'))
+            log.info(e.message)
 
 
 if __name__ == "__main__":
