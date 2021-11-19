@@ -17,8 +17,8 @@ tp-emr-activity-enrichment-distribution
 shnbin-tp-activity-enrichment
 tp-emr-stream-preprocessor
 shnbin-tp-stream-preprocessor
-tp-emr-activity-persistor
-shnbin-tp-activity-persistor
+tp-emr-activity-json-transformer
+shnbin-tp-activity-json-transformer
 tp-emr-preprocessed-activity-consumer-distribution
 shnbin-tp-preprocessed-activity-consumer
 tp-emr-anomaly-detection-distribution
